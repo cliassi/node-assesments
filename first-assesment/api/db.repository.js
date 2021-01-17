@@ -1,5 +1,5 @@
 let config = require('./config')
-let models;// = config.getDB().get('models');
+let models;
 
 
 function get(collection) {
