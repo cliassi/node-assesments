@@ -1,10 +1,7 @@
 let config = require('./config')
-let models;
-
 
 function get(collection) {
-  models = config.getDB().get(collection);
-  return models.value();
+  return config.getDB().get(collection).value();
 }
 
 function getById(collection, id) {
