@@ -15,6 +15,10 @@ router.post('/', (req, res) => {
         controller.createProduct(req.body);
         res.status(201).send({ message: 'Product Created' });
 });
+router.put('/', (req, res) => {
+        controller.updateProduct(req.body);
+        res.status(200).send({ message: 'Product Updated' });
+});
 
 router.delete('/:id', (req, res) => {
         controller.deleteProduct(req.params.id);

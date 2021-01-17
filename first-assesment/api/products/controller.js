@@ -12,6 +12,10 @@ function createProduct(product) {
         return productRepository.createProduct(product);
 }
 
+function updateProduct(product) {
+        return productRepository.updateProduct(product);
+}
+
 function deleteProduct(id) {
         return productRepository.deleteProductById(id);
 }
@@ -21,4 +25,5 @@ module.exports = {
         getProduct,
         createProduct,
         deleteProduct,
+        updateProduct
 };

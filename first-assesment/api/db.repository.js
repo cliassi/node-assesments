@@ -23,9 +23,15 @@ function remove(collection, id) {
   models.remove({ id: Number(id) }).write();
 }
 
+function update(collection, model){
+  models = config.getDB().get(collection);
+  models.find({id: model.id}).assign({name: model.name}).write();
+}
+
 module.exports = {
   get,
   getById,
   create,
-  remove
+  remove,
+  update
 }

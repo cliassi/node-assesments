@@ -13,6 +13,10 @@ function createProduct(product) {
   repo.create("products", product);
 }
 
+function updateProduct(product) {
+  repo.update("products", product);
+}
+
 function deleteProductById(id) {
   repo.remove("products", id);
 }
@@ -21,5 +25,6 @@ module.exports = {
   getProducts,
   getProductById,
   createProduct,
-  deleteProductById
+  deleteProductById,
+  updateProduct
 }
