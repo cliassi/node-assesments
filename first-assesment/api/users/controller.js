@@ -12,6 +12,10 @@ function createUser(user) {
   return userRepository.createUser(user);
 }
 
+function updateUser(user) {
+  return userRepository.updateUser(user);
+}
+
 function deleteUser(id) {
   return userRepository.deleteUserById(id);
 }

@@ -1,24 +1,25 @@
 let repo = require('../db.repository')
+const collection = "products"
 
 
 function getProducts() {
-  return repo.get("products");
+  return repo.get(collection);
 }
 
 function getProductById(id) {
-  return repo.getById("products",id);
+  return repo.getById(collection,id);
 }
 
 function createProduct(product) {
-  repo.create("products", product);
+  repo.create(collection, product);
 }
 
 function updateProduct(product) {
-  repo.update("products", product);
+  repo.update(collection, product);
 }
 
 function deleteProductById(id) {
-  repo.remove("products", id);
+  repo.remove(collection, id);
 }
 
 module.exports = {
