@@ -13,6 +13,12 @@ class Repository {
     })
   }
 
+  static async getByServiceRef(ref) {
+    return TemplateDb.findOne({ serviceRef: ref }).then((template) => {
+      return template
+    })
+  }
+
   static async create(template) {
     var data = new TemplateDb(template);
     return data.save();
@@ -32,7 +38,7 @@ class Repository {
   }
 
   static async deleteById(id) {
-    return NotificationData.findByIdAndRemove(id).exec();
+    return TemplateDb.findByIdAndRemove(id).exec();
   }
 }
 

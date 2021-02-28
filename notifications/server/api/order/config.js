@@ -1,5 +1,5 @@
 const config = {
-  ENDPOINT: '/notification',
+  ENDPOINT: '/order',
 };
 
 module.exports = config;

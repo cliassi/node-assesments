@@ -1,5 +1,5 @@
 const config = {
-  ENDPOINT: '/notification',
+  ENDPOINT: '/fulfilment',
 };
 
 module.exports = config;

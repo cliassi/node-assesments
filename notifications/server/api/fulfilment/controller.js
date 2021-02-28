@@ -1,4 +1,4 @@
-const TemplateDb = require('./model');
+const FulfilmentDb = require('./model');
 const repo = require('./repository');
 
 class Controller {
@@ -11,8 +11,8 @@ class Controller {
   static async remove(id) {
     return repo.deleteById(id)
   }
-  static async save(template) {
-    return repo.create(template);
+  static async save(fulfilment) {
+    return repo.create(fulfilment);
   }
 }
 

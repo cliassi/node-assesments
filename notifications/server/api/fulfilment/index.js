@@ -1,5 +1,5 @@
 /**
- * @module notification
+ * @module fulfilment
  *
  * @description
  * All the exportable files and functions should be added here.
