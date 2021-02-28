@@ -1,13 +1,18 @@
-version: '3.9'
+version: '3.3'
 
 services:
+
   build_image:
     build: .
-    image: notification-service:1.0.0 # use your own image name e.g. rancher/my-app:{VERSION}
+    image: services/notification:${VERSION} # use your own image name e.g. rancher/my-app:{VERSION}
+
   app_svc:
     container_name: notification-service
-    image: notification-service:1.0.0
-    depends_on: [build_image]
+    image: services/notification:${VERSION}
+    depends_on:
+      - build_image
+      - mongo
+      - redis
     restart: unless-stopped
     env_file: .env
     environment:
@@ -17,14 +22,15 @@ services:
       - MONGO_PORT=$MONGO_PORT
       - MONGO_DB=$MONGO_DB
     ports:
-      - 8282:8282
+      - 8084:8282
     networks:
       - svc-network
-    command: scripts/wait-for.sh mongo:27017 -- bash scripts/startup.sh
+    command: sh -c 'scripts/startup.sh'
+    #command: sh -c 'scripts/wait-for.sh mongo:27020 -- bash scripts/startup.sh'
 
   mongo:
     container_name: mongo
-    image: mongo:4.1.8-xenial
+    image: mongo:4-bionic
     restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
@@ -33,7 +39,19 @@ services:
     ports:
       - 27020:27017
     volumes:
-      - dbdata:/data/db
+      #- dbdata:/data/db # this is not working for some reason
+      - dbdata:/dump
+    networks:
+      - svc-network
+
+  redis:
+    container_name: redis
+    image: redis:6-buster
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data
     networks:
       - svc-network
 
@@ -43,3 +61,4 @@ networks:
 
 volumes:
   dbdata:
+  redis-data:
