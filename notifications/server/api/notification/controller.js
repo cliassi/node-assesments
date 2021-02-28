@@ -1,7 +1,8 @@
 const NotificationData = require('./schema');
 
 class Controller {
-  static async getUser() {
+  static async getUser(id) {
+    return {id};
     var item = {
       subject: 'C @ ' + new Date().toString(),
       content: 'Email body'
@@ -21,10 +22,10 @@ class Controller {
 
     // NotificationData.findByIdAndRemove('6034981f316690a3701cc176').exec();
 
-    return NotificationData.find().then((doc) => {
-      NotificationData.findByIdAndRemove(doc[doc.length - 1]._id).exec();
-      return doc
-    })
+    // return NotificationData.find().then((doc) => {
+    //   NotificationData.findByIdAndRemove(doc[doc.length - 1]._id).exec();
+    //   return doc
+    // })
     // return {
     //   name: 'Notifications',
     //   role: 'admin',

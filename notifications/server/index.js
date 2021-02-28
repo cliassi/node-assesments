@@ -9,37 +9,35 @@ const connManager = require('@core/connectionManager');
 const config = require('@config');
 const shutDownManager = require('@core/shutdownManager');
 const logger = require('@core/logger');
+const mailer = require('./modules/mailer');
 
 //App Code start
-const handlebars = require('handlebars')
-const sgMail = require('@sendgrid/mail')
-const htmlToText = require('html-to-text')
-const dotenv = require('dotenv')
-const redis = require('redis');
-const subscriber = redis.createClient();
-const env = dotenv.config()
-sgMail.setApiKey(env.parsed.SENDGRID_API_KEY)
+// const handlebars = require('handlebars')
+// const sgMail = require('@sendgrid/mail')
+// const dotenv = require('dotenv')
+// const redis = require('redis');
+// const subscriber = redis.createClient();
+// const env = dotenv.config()
+// sgMail.setApiKey(env.parsed.SENDGRID_API_KEY)
 
 subscriber.on('message', (channel, message) => {
   const data = JSON.parse(message);
-  console.log('Received data :' + message);
-  var template = handlebars.compile('Dear <b>{{order.customer_name}}</b><br>Thank you for your order {{order.order_no}}<br><br><strong>Regards,</strong><br>The team!');
+  mailer.send('Dear <b>{{order.customer_name}}</b><br>Thank you for your order {{order.order_no}}<br><br><strong>Regards,</strong><br>The team!', data)
+  // var body = template({ order: data });
+  // const msg = {
+  //   to: data.email, // Change to your recipient
+  //   from: 'nesar@panacea.com.my', // Change to your verified sender
+  //   subject: data.subject,
+  //   text: body.replace(/\n/ig, '')
+  //     .replace(/<\/\s*(?:p|div)>/ig, '\n')
+  //     .replace(/<br[^>]*\/?>/ig, '\n')
+  //     .replace(/<[^>]*>/ig, '')
+  //     .replace('&nbsp;', ' ')
+  //     .replace(/[^\S\r\n][^\S\r\n]+/ig, ' '),
+  //   html: body,
+  // }
 
-  var body = template({ order: data });
-  const msg = {
-    to: data.email, // Change to your recipient
-    from: 'nesar@panacea.com.my', // Change to your verified sender
-    subject: data.subject,
-    text: body.replace(/\n/ig, '')
-      .replace(/<\/\s*(?:p|div)>/ig, '\n')
-      .replace(/<br[^>]*\/?>/ig, '\n')
-      .replace(/<[^>]*>/ig, '')
-      .replace('&nbsp;', ' ')
-      .replace(/[^\S\r\n][^\S\r\n]+/ig, ' '),
-    html: body,
-  }
-
-  console.log(msg)
+  // console.log(channel)
   // sgMail
   //   .send(msg)
   //   .then(() => {
@@ -50,7 +48,9 @@ subscriber.on('message', (channel, message) => {
   //   })
 })
 
-subscriber.subscribe('user-notify');
+subscriber.subscribe('order-service');
+// subscriber.subscribe('fulfilment-service');
+// subscriber.subscribe('payment-service');
 
 //App Code end
 
